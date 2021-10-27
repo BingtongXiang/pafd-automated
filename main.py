@@ -10,10 +10,20 @@ import easyocr
 import io
 import numpy
 from PIL import Image
+import os
+import sys
+import json
+import time
+import hashlib
+import requests
+from bs4 import BeautifulSoup
+from datetime import datetime, timezone, timedelta
 
 
 from requests import session, post
 
+PUSH_KEY = os.getenv("PUSH_KEY")
+checkin_status = False
 
 class Fudan:
     """
@@ -152,9 +162,11 @@ class Zlapp(Fudan):
         today = time.strftime("%Y%m%d", time.localtime())
         if last_info["d"]["info"]["date"] == today:
             print("\n*******今日已提交*******")
+            checkin_status = True
             self.close()
         else:
             print("\n\n*******未提交*******")
+            checkin_status = False
             self.last_info = last_info["d"]["oldInfo"]
             
     def read_captcha(self, img_byte):
@@ -250,6 +262,25 @@ def get_account():
     return uid, psw
 
 
+def notify(_title, _message=None):
+    if not PUSH_KEY:
+        print("未配置PUSH_KEY！")
+        return
+
+    if not _message:
+        _message = _title
+
+    print(_title)
+    print(_message)
+
+    _response = requests.post(f"https://sc.ftqq.com/{PUSH_KEY}.send", {"text": _title, "desp": _message})
+
+    if _response.status_code == 200:
+        print(f"发送通知状态：{_response.content.decode('utf-8')}")
+    else:
+        print(f"发送通知失败：{_response.status_code}")
+
+
 if __name__ == '__main__':
     uid, psw = get_account()
     # print(uid, psw)
@@ -264,4 +295,9 @@ if __name__ == '__main__':
     daily_fudan.checkin()
     # 再检查一遍
     daily_fudan.check()
+    if checkin_status:
+        notify("打卡成功！")
+    else:
+        notify("打卡失败，请手动打卡！")
+    
     daily_fudan.close(1)
