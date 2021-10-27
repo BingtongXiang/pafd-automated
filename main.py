@@ -10,13 +10,9 @@ import easyocr
 import io
 import numpy
 from PIL import Image
-import os
 import sys
 import json
-import time
-import hashlib
-import requests
-from datetime import datetime, timezone, timedelta
+
 
 
 from requests import session, post
