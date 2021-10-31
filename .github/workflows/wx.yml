@@ -6,13 +6,13 @@ on:
   pull_request:
     branches: [ master ]
   schedule:
-    - cron: '40 02 * * 0'
-    - cron: '18 03 * * 1'
-    - cron: '21 04 * * 2'
-    - cron: '22 03 * * 3'
-    - cron: '58 04 * * 4'
-    - cron: '11 03 * * 5'
-    - cron: '02 04 * * 6'
+    - cron: '40 08 * * 0'
+    - cron: '18 08 * * 1'
+    - cron: '21 08 * * 2'
+    - cron: '22 08 * * 3'
+    - cron: '58 08 * * 4'
+    - cron: '11 08 * * 5'
+    - cron: '02 08 * * 6'
   workflow_dispatch:
 
 jobs:
