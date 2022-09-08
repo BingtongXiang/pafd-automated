@@ -2,14 +2,14 @@ name: Go
 
 on:
   schedule:
-    - cron: '20 02 * * 0'
-    - cron: '18 03 * * 1'
-    - cron: '21 01 * * 2'
-    - cron: '22 03 * * 3'
-    - cron: '58 00 * * 4'
-    - cron: '11 03 * * 5'
-    - cron: '02 01 * * 6'
-
+    - cron: '38 03 * * 0'
+    - cron: '26 02 * * 1'
+    - cron: '56 01 * * 2'
+    - cron: '23 02 * * 3'
+    - cron: '12 03 * * 4'
+    - cron: '16 02 * * 5'
+    - cron: '52 03 * * 6'
+  workflow_dispatch:
 
 jobs:
 
